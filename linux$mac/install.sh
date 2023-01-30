@@ -43,6 +43,8 @@ sudo chmod 1 /usr/bin/velt/target/.c_write
 sudo chmod 1 /usr/bin/velt/cst/.uninstall.sh
 sudo chmod 1 /usr/bin/velt/cst/.set.sh
 
+[ ! command -v velt ] && echo "export PATH=PATH:/usr/bin/velt/bin/" > "/home/$whoami/.profile"
+
 sleep 2
 echo "Velt installed successfully 😎️ 💐️. Run velt --version to confirm."
 exit
