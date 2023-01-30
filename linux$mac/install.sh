@@ -1,7 +1,6 @@
 #!/bin/bash
 
 OSD = ""
-
 ass() {
 	$OSD = "_"
 }
