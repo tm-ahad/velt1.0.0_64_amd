@@ -1,3 +1,11 @@
+OSD = ""
+
+ass() {
+	$OSD = "_"
+}
+
+[ "$OSTYPE" == "darwin" ] && ass()
+
 sudo chmod 777 /usr/bin/velt/bin/.velt
 sudo chmod 777 /usr/bin/velt/target/.comp~
 sudo chmod 777 /usr/bin/velt/target/.c_write
