@@ -1,20 +1,12 @@
 #!/bin/bash
 
-OSD = ""
-
-ass() {
-	$OSD = "_"
-}
-
-[ "$OSTYPE" == "darwin" ] && ass() 
-
 if [ ! -e /usr/bin/velt ] 
 then	
 	sudo mkdir /usr/bin/velt
 fi
 if [ ! -e /usr/bin/velt/target ]
 then
-	sudo /usr/bin/velt/target
+	sudo mkdir /usr/bin/velt/target
 fi
 if [ ! -e /usr/bin/velt/bin ]
 then
@@ -24,27 +16,44 @@ if [ ! -e /usr/bin/velt/cst ]
 then
 	sudo mkdir /usr/bin/velt/cst
 fi
+if [ ! -e /usr/bin/velt/opt ]
+then
+	sudo mkdir /usr/bin/velt/opt
+fi
 
-sudo touch /usr/bin/velt/bin/.velt
+sudo touch /usr/bin/velt/bin/velt
 sudo touch /usr/bin/velt/target/.c_write
 sudo touch /usr/bin/velt/target/.comp~
 sudo touch /usr/bin/velt/cst/.uninstall.sh
 sudo touch /usr/bin/velt/cst/.set.sh
+sudo touch /usr/bin/velt/opt/.bash
 
-sudo cp "./.${OSD}velt" /usr/bin/velt/bin/.velt
-sudo cp "./.${OSD}comp~" /usr/bin/velt/target/.comp~
-sudo cp "./.${OSD}c_write" /usr/bin/velt/target/.c_write
-sudo cp "./.${OSD}uninstall.sh" /usr/bin/velt/cst/.uninstall.sh
-sudo cp "./.${OSD}set.sh" /usr/bin/velt/cst/.set.sh
+if [ "$OSTYPE" = "linux-gnu" ]
+then 
+sudo cp ./.velt /usr/bin/velt/bin/.velt
+sudo cp ./.comp~ /usr/bin/velt/target/.comp~
+sudo cp ./.c_write /usr/bin/velt/target/.c_write
+sudo cp ./.uninstall.sh /usr/bin/velt/cst/.uninstall.sh
+sudo cp ./.set.sh /usr/bin/velt/cst/.set.sh
+else
+sudo cp ./._velt /usr/bin/velt/bin/velt
+sudo cp ./._comp~ /usr/bin/velt/target/.comp~
+sudo cp ./._c_write /usr/bin/velt/target/.c_write
+sudo cp ./._uninstall.sh /usr/bin/velt/cst/.uninstall.sh
+sudo cp ./._set.sh /usr/bin/velt/cst/.set.sh
+fi
 
-sudo chmod 1 /usr/bin/velt/bin/.velt
+if [ ! -p velt  ]
+then
+	sudo cp $HOME/.bashrc /usr/bin/velt/opt/.bash
+	sudo echo "export PATH=PATH:/usr/bin/velt/bin/" > "${HOME}/.bashrc"
+fi
+
+sudo chmod 1 /usr/bin/velt/bin/velt
 sudo chmod 1 /usr/bin/velt/target/.comp~
 sudo chmod 1 /usr/bin/velt/target/.c_write
 sudo chmod 1 /usr/bin/velt/cst/.uninstall.sh
 sudo chmod 1 /usr/bin/velt/cst/.set.sh
 
-[ ! command -v velt ] && echo "export PATH=PATH:/usr/bin/velt/bin/" > "/home/$whoami/.profile"
-
-sleep 2
 echo "Velt installed successfully 😎️ 💐️. Run velt --version to confirm."
 exit
